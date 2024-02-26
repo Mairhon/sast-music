@@ -82,18 +82,13 @@ void LikedSongViewModel::loadAllLikedSongs() {
 }
 
 void LikedSongViewModel::playSongByIndex(int index) {
-    // customized option
-    if (index >= model.size() && model != allLikedSongs) {
-        model = allLikedSongs;
-    }
-
-    auto song = model[index];
+    // customized
+    auto song = allLikedSongs[index];
     NextUpViewModel::getInstance()->appendModel(song);
 }
 
 void LikedSongViewModel::playAllSongs() {
-    // TODO (initially completed)
-    model = allLikedSongs;
+    // DONE
     NextUpViewModel::getInstance()->resetModel(allLikedSongs);
 }
 

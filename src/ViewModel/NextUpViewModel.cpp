@@ -191,26 +191,17 @@ Song NextUpViewModel::getNextSong() {
         break;
     }
     case PlayMode::ListRepeat: {
-        // TODO (initially completed)
-        if (playingSong.id == model.last().id) {
-            song = model.first();
-        } else {
-            int cntIndex = model.indexOf(playingSong);
-
-            if (cntIndex == -1)
-                song = model.first();
-            else
-                song = model[cntIndex + 1];
-        }
+        // DONE
+        song = model.first();
         break;
     }
     case PlayMode::RepeatOne: {
-        // TODO (initially completed)
+        // DONE
         song = playingSong;
         break;
     }
     case PlayMode::Shuffle: {
-        // TODO (initially completed)
+        // DONE
         int random_index = randomInt(0, model.count());
         song = model[random_index];
         break;

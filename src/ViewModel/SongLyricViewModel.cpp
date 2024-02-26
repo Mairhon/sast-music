@@ -22,7 +22,7 @@ QVariant SongLyricViewModel::data(const QModelIndex& index, int role) const {
     if (!index.isValid())
         return QVariant();
 
-    // FIXME: Implement me! (initially completed)
+    // DONE
     auto element = model[index.row()];
     switch (role) {
     case Role::Lyric:
@@ -39,7 +39,7 @@ QVariant SongLyricViewModel::data(const QModelIndex& index, int role) const {
 QHash<int, QByteArray> SongLyricViewModel::roleNames() const {
     static QHash<int, QByteArray> roles;
 
-    // FIXME: Implement me! (initially completed)
+    // DONE
     if (roles.isEmpty()) {
         roles[Role::Lyric] = "lyric";
         roles[Role::TrLyric] = "trLyric";
@@ -50,21 +50,21 @@ QHash<int, QByteArray> SongLyricViewModel::roleNames() const {
 }
 
 void SongLyricViewModel::loadSongLyric(SongId songId) {
-    // FIXME: Implement me! (initially completed)
+    // DONE
     CloudMusicClient::getInstance()->getSongLyric(songId, [this](Result<SongLyricEntity> result) {
         if (result.isErr()) {
             emit loadSongLyricFailed();
             return;
         }
         auto entity = result.unwrap();
-        this->hasLyric = !entity.pureMusic;
+        setHasLyric(!entity.pureMusic);
         if (this->hasLyric) {
             if (entity.trivial.has_value()) {
                 this->model = parseSongLyricEntity(entity.trivial->lyric);
                 if (model.isEmpty())
-                    this->hasLyric = false;
+                    setHasLyric(false);
             } else {
-                this->hasLyric = false;
+                setHasLyric(false);
             }
         }
         emit loadSongLyricSuccess();
@@ -84,7 +84,7 @@ void SongLyricViewModel::setHasLyric(bool newHasLyric) {
 
 // task5 function definition
 QList<SongLyric> SongLyricViewModel::parseSongLyricEntity(const QString& rawSongLyricData) {
-    // FIXME: Implement me! (initially completed)
+    // DONE
 
     QList<SongLyric> SongLyricList;
 
@@ -109,7 +109,7 @@ QList<SongLyric> SongLyricViewModel::parseSongLyricEntity(const QString& rawSong
             quint64 timeStamp = 0;
             timeStamp += timeStampStr.sliced(0, 2).toULongLong() * 60 * 1000;
             timeStamp += timeStampStr.sliced(3, 2).toULongLong() * 1000;
-            timeStamp += timeStampStr.sliced(6, 2).toULongLong();
+            timeStamp += timeStampStr.sliced(6, 2).toULongLong() * 10;
             return timeStamp;
         };
 
